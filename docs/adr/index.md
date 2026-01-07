@@ -98,6 +98,17 @@ Each ADR follows a consistent format:
     - Test execution orchestration
     - Infrastructure setup and cleanup
 
+14. [ADR-014: Disconnected Deployment Methods](0014-disconnected-deployment-methods)
+    - Appliance method for air-gap deployments
+    - Agent + Mirror Registry method
+    - Complete install and upgrade workflows
+
+15. [ADR-015: Multipath Root Device Configuration](0015-multipath-root-device-configuration)
+    - Support for all rootDeviceHints parameters
+    - Multipath SAN storage configuration
+    - WWN-based device identification
+    - Enterprise storage scenarios
+
 ## Categories
 
 ### Installation Strategy
@@ -125,9 +136,13 @@ Each ADR follows a consistent format:
 ### Configuration & Identity Management
 - [ADR-010: Manifest Generation and Template Management](0010-manifest-generation-and-templating)
 - [ADR-011: Identity Management Integration](0011-identity-management-integration)
+- [ADR-015: Multipath Root Device Configuration](0015-multipath-root-device-configuration)
 
 ### Reference Architecture
 - [ADR-012: Deployment Patterns and Reference Configurations](0012-deployment-patterns-and-configurations)
+
+### Storage & Infrastructure
+- [ADR-015: Multipath Root Device Configuration](0015-multipath-root-device-configuration)
 
 ### Testing Framework
 - [ADR-006: Testing and Execution Environment](0006-testing-and-execution-environment)
