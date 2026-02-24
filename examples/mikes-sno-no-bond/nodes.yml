@@ -1,0 +1,33 @@
+# Node Counts the installer will expect
+control_plane_replicas: 1
+app_node_replicas: 0
+octect: 10.84.213
+node_one_mac: B8:E9:24:A6:33:0C
+
+# nodes defines the nodes to use for the cluster
+nodes:
+  - hostname: agentic01-ocp-b200-pdx02-l34-u39
+    role: master
+    rootDeviceHints:
+      deviceName: '/dev/nvme0n1'
+    interfaces:
+      - name: ens2f0np0
+        mac_address: "{{ node_one_mac }}"
+    networkConfig:
+      interfaces:
+        - name: ens8f0np0
+          type: ethernet
+          state: up
+          mac-address: "{{ node_one_mac }}"
+          ipv4:
+            enabled: true
+            address:
+              - ip: "{{ octect }}.8"
+                prefix-length: 26
+            dhcp: false
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: "{{ octect }}.1"
+            next-hop-interface: ens8f0np0
+            table-id: 254

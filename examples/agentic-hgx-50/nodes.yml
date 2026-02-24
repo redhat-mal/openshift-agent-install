@@ -1,0 +1,42 @@
+# Node Counts the installer will expect
+control_plane_replicas: 1
+app_node_replicas: 0
+octect: 10.84.237
+node_one_mac_1: 9C:63:C0:E4:30:96
+node_one_mac_2: 9C:63:C0:E4:30:97
+
+# nodes defines the nodes to use for the cluster
+nodes:
+  - hostname: prd01-astra-hgx-xe9680l-pdx02-m1-j32-u13.nvidia.com
+    role: master
+    rootDeviceHints:
+      deviceName: /dev/nvme4n1
+    interfaces:
+      - name: ens33f0np0
+        mac_address: "{{ node_one_mac_1 }}"
+      - name: ens33f1np1
+        mac_address: "{{ node_one_mac_2 }}"
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          ipv4:
+            address:
+              - ip: "{{ octect }}.50"
+                prefix-length: 26
+            enabled: true
+            dhcp: false
+          link-aggregation:
+            mode: 802.3ad
+            options:
+              miimon: '100'
+            port:
+              - ens33f0np0
+              - ens33f1np1
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: "{{ octect }}.1"
+            next-hop-interface: bond0
+            table-id: 254

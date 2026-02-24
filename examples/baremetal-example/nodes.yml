@@ -14,7 +14,7 @@ nodes:
   - hostname: node-1
     role: master
     rootDeviceHints:
-      deviceName: /dev/nvme0n1
+      deviceName: /dev/nvme1n1
     interfaces:
       - name: eno1
         mac_address: "{{ node_one_mac }}"

@@ -1,0 +1,45 @@
+# Node Counts the installer will expect
+control_plane_replicas: 1
+app_node_replicas: 0
+octect: 10.84.236
+node_one_mac_1: 7C:8C:09:05:72:30
+node_one_mac_2: 7C:8C:09:05:72:31
+
+node_two_mac_1: 7C:8C:09:05:6F:D0
+node_two_mac_2: 7C:8C:09:05:6F:D1
+
+# nodes defines the nodes to use for the cluster
+nodes:
+  - hostname: prd01-astra-hgx-xe7745-pdx02-m1-g34-u13
+    role: master
+    rootDeviceHints:
+      deviceName: /dev/nvme5n1
+    interfaces:
+      - name: ens6f0
+        mac_address: "{{ node_one_mac_1 }}"
+      - name: ens6f1
+        mac_address: "{{ node_one_mac_2 }}"
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          ipv4:
+            address:
+              - ip: "{{ octect }}.43"
+                prefix-length: 26
+            enabled: true
+            dhcp: false
+          link-aggregation:
+            mode: 802.3ad
+            options:
+              miimon: '100'
+            port:
+              - ens6f0
+              - ens6f1
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: "{{ octect }}.33"
+            next-hop-interface: bond0
+            table-id: 254

@@ -1,0 +1,42 @@
+# Node Counts the installer will expect
+control_plane_replicas: 1
+app_node_replicas: 0
+octect: 10.84.213
+node_one_mac_1: b8:e9:24:a6:2f:c8
+node_one_mac_2: b8:e9:24:a6:24:f2
+
+# nodes defines the nodes to use for the cluster
+nodes:
+  - hostname: agentic01-ocp-b200-pdx02-l32-u39.nvidia.com
+    role: master
+    rootDeviceHints:
+      deviceName: /dev/nvme5n1
+    interfaces:
+      - name: ens2f0np0
+        mac_address: "{{ node_one_mac_1 }}"
+      - name: ens8f0np0
+        mac_address: "{{ node_one_mac_2 }}"
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          ipv4:
+            address:
+              - ip: "{{ octect }}.12"
+                prefix-length: 26
+            enabled: true
+            dhcp: false
+          link-aggregation:
+            mode: 802.3ad
+            options:
+              miimon: '100'
+            port:
+              - ens2f0np0
+              - ens8f0np0
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: "{{ octect }}.1"
+            next-hop-interface: bond0
+            table-id: 254
